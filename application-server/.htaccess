@@ -1,0 +1,11 @@
+RewriteEngine On
+
+RewriteRule ^video/original-image/(.*)$ /api/rewrites.php?media=video&type=original-image&key=$1 [QSA,L]
+RewriteRule ^video/preview-image/(.*)$ /api/rewrites.php?media=video&type=preview-image&key=$1 [QSA,L]
+RewriteRule ^video/processed-image/(.*)/(.*)$ /api/rewrites.php?media=video&type=processed-image&key=$1&file=$2 [QSA,L]
+RewriteRule ^video/filtered/(.*)$ /api/rewrites.php?media=video&type=filtered-video&key=$1 [QSA,L]
+RewriteRule ^video/original/(.*)/(.*)$ /api/rewrites.php?media=video&type=original-video&key=$1&extension=$2 [QSA,L]
+
+RewriteRule ^photo/original/(.*)/(.*)$ /api/rewrites.php?media=photo&type=original-image&key=$1&extension=$2 [QSA,L]
+RewriteRule ^photo/filtered/(.*)/(.*)$ /api/rewrites.php?media=photo&type=filtered-image&key=$1&extension=$2 [QSA,L]
+

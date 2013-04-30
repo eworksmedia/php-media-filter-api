@@ -1,0 +1,19 @@
+﻿[Script Info]
+Title: Default Aegisub file
+ScriptType: v4.00+
+WrapStyle: 0
+PlayResX: {{width}}
+PlayResY: {{height}}
+ScaledBorderAndShadow: yes
+Last Style Storage: Default
+Video Aspect Ratio: 0
+Video Zoom: 6
+Video Position: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: FFMPEG,{{font}},{{fontsize}},&H00{{fontcolor}},&H000000FF,&H00{{bordercolor}},&H00{{shadowcolor}},0,0,0,0,100,100,0,0,1,{{bordersize}},{{shadowsize}},{{position}},10,10,10,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:0{{startseconds}}.00,0:00:0{{endseconds}}.00,FFMPEG,,0000,0000,0000,,{\fad(500,500)\fs{{fontsize}}}{{text}}

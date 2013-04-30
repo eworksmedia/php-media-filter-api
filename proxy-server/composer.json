@@ -1,0 +1,23 @@
+{
+    "name": "gonzalo123/rest-proxy",
+    "description": "Simple rest proxy",
+    "authors": [
+        {
+            "name": "Gonzalo Ayuso",
+            "email": "gonzalo123@gmail.com",
+            "homepage": "http://gonzalo123.wordpress.com/"
+        }
+    ],
+    
+    "require": {
+        "php": ">=5.3.0",
+        "ext-curl": "*",
+        "symfony/class-loader":"dev-master",
+        "symfony/http-foundation":"dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "RestProxy": "lib/"
+        }
+    }
+}

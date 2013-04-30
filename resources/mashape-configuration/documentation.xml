@@ -1,0 +1,1498 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<api xmlns="http://mashape.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://mashape.com http://www.mashape.com/schema/mashape-4.0.xsd">
+    <endpoint name="Filter Options" group="Options" http="GET">
+        <route>/options</route>
+        <description>Returns parameters used throughout the API. Lists all available and active filters along with their required parameters. Lists all available and active fonts used for overlaying text.</description>
+        <parameters/>
+        <response type="Filter Options Response"/>
+        <errors>
+            <error type="JSON" code="403">
+                <description>
+					{
+	&quot;code&quot;:1,
+	&quot;message&quot;:&quot;Invalid API Token&quot;
+}				</description>
+            </error>
+        </errors>
+    </endpoint>
+    <endpoint name="Photo Delete" group="Photo" http="DELETE">
+        <route>/photo/{session}</route>
+        <description>Deletes the specified photo session and all related files from the server. There is no undo to this so be careful!</description>
+        <parameters>
+            <parameter type="string" optional="false" name="session">
+                <description>Unique key associated with media</description>
+                <example></example>
+            </parameter>
+        </parameters>
+        <response type="Photo Delete Response"/>
+        <errors>
+            <error type="JSON" code="403">
+                <description>
+					{
+	&quot;code&quot;:1,
+	&quot;message&quot;:&quot;Invalid authentication&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:3,
+	&quot;message&quot;:&quot;Specified session was not found&quot;
+}				</description>
+            </error>
+        </errors>
+    </endpoint>
+    <endpoint name="Photo Filter" group="Photo" http="POST">
+        <route>/photo/filter/{session}</route>
+        <description>Filter the specified photo</description>
+        <parameters>
+            <parameter type="string" optional="false" name="session">
+                <description>Unique key associated with media</description>
+                <example></example>
+            </parameter>
+            <parameter type="string" optional="false" name="filter">
+                <description>A filter_key that represents the filter to use</description>
+                <example></example>
+            </parameter>
+            <parameter type="number" optional="true" name="filterred">
+                <description>Number from 0-255 representing the Red value for the filter. May be required for certain filters.</description>
+                <example>0</example>
+            </parameter>
+            <parameter type="number" optional="true" name="filtergreen">
+                <description>Number from 0-255 representing the Green value for the filter. May be required for certain filters.</description>
+                <example>0</example>
+            </parameter>
+            <parameter type="number" optional="true" name="filterblue">
+                <description>Number from 0-255 representing the Blue value for the filter. May be required for certain filters.</description>
+                <example>0</example>
+            </parameter>
+            <parameter type="number" optional="true" name="saturation">
+                <description>Number from -100-100 representing the Saturation value for the filter. May be required for certain filters.</description>
+                <example>0</example>
+            </parameter>
+        </parameters>
+        <response type="Photo Filter Response"/>
+        <errors>
+            <error type="JSON" code="403">
+                <description>
+					{
+	&quot;code&quot;:1,
+	&quot;message&quot;:&quot;Invalid authentication&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:2,
+	&quot;message&quot;:&quot;Missing Required Parameters&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:3,
+	&quot;message&quot;:&quot;Specified session was not found&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:6,
+	&quot;message&quot;:&quot;Specified Filter is either inactive or not found&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:7,
+	&quot;message&quot;:&quot;Missing Specified Filter's Required Parameters&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:102,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:103,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:104,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+        </errors>
+    </endpoint>
+    <endpoint name="Photo Information" group="Photo" http="POST">
+        <route>/photo/{session}</route>
+        <description>Returns information about a completed filter session.</description>
+        <parameters>
+            <parameter type="string" optional="false" name="session">
+                <description>Unique key associated with media</description>
+                <example></example>
+            </parameter>
+        </parameters>
+        <response type="Photo Information Response"/>
+        <errors>
+            <error type="JSON" code="403">
+                <description>
+					{
+	&quot;code&quot;:1,
+	&quot;message&quot;:&quot;Invalid authentication&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:3,
+	&quot;message&quot;:&quot;Specified session was not found&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:103,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+        </errors>
+    </endpoint>
+    <endpoint name="Photo Initiate" group="Photo" http="POST">
+        <route>/photo/initiate</route>
+        <description>Initiates a filter session and responds with the session's unique identifier. The identifier is used throughout the API to determine which photo to complete the requested action on.</description>
+        <parameters>
+            <parameter type="binary" optional="false" name="file">
+                <description>Binary file data posted in the body of the request</description>
+                <example></example>
+            </parameter>
+            <parameter type="string" optional="false" name="name">
+                <description>Required only if the file name isn't sent as part of the File object</description>
+                <example></example>
+            </parameter>
+        </parameters>
+        <response type="Photo Initiate Response"/>
+        <errors>
+            <error type="JSON" code="403">
+                <description>
+					{
+	&quot;code&quot;:1,
+	&quot;message&quot;:&quot;Invalid authentication&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:2,
+	&quot;message&quot;:&quot;Missing Required Parameters&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:100,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:102,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:104,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:105,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+        </errors>
+    </endpoint>
+    <endpoint name="Photo Rotate" group="Photo" http="POST">
+        <route>/photo/rotate/{session}</route>
+        <description>Rotates the specified photo.</description>
+        <parameters>
+            <parameter type="string" optional="false" name="session">
+                <description>Unique key associated with media</description>
+                <example></example>
+            </parameter>
+            <parameter type="number" optional="false" name="rotation">
+                <description>A number of 0-2. 0 = Original, 1 = Clockwise, 2 = Counter Clockwise</description>
+                <example></example>
+            </parameter>
+        </parameters>
+        <response type="Photo Rotate Response"/>
+        <errors>
+            <error type="JSON" code="403">
+                <description>
+					{
+	&quot;code&quot;:1,
+	&quot;message&quot;:&quot;Invalid authentication&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:2,
+	&quot;message&quot;:&quot;Missing Required Parameters&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:3,
+	&quot;message&quot;:&quot;Specified session was not found&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:102,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:103,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:111,
+	&quot;message&quot;:&quot;Unable to fulfill request with exit code [exit_code]&quot;
+}				</description>
+            </error>
+        </errors>
+    </endpoint>
+    <endpoint name="Video Delete" group="Video" http="DELETE">
+        <route>/video/{session}</route>
+        <description>Deletes the specified video session and all related files from the server. There is no undo to this so be careful!</description>
+        <parameters>
+            <parameter type="string" optional="false" name="session">
+                <description>Unique key associated with media</description>
+                <example></example>
+            </parameter>
+        </parameters>
+        <response type="Video Delete Response"/>
+        <errors>
+            <error type="JSON" code="403">
+                <description>
+					{
+	&quot;code&quot;:1,
+	&quot;message&quot;:&quot;Invalid API Token&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="403">
+                <description>
+					{
+	&quot;code&quot;:4,
+	&quot;message&quot;:&quot;Specified video session is currently filtering&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:3,
+	&quot;message&quot;:&quot;Specified video session was not found&quot;
+}				</description>
+            </error>
+        </errors>
+    </endpoint>
+    <endpoint name="Video Filter" group="Video" http="POST">
+        <route>/video/filter/{session}</route>
+        <description>Filters the specified video. This method is non-blocking so as soon as it returns as successful, it's then okay to start checking the progress of the filter job.</description>
+        <parameters>
+            <parameter type="string" optional="false" name="session">
+                <description>Unique key associated with media</description>
+                <example></example>
+            </parameter>
+            <parameter type="string" optional="false" name="filter">
+                <description>A filter_key that represents the filter to use</description>
+                <example></example>
+            </parameter>
+            <parameter type="number" optional="true" name="filterred">
+                <description>Number from 0-255 representing the Red value for the filter. May be required for certain filters.</description>
+                <example>0</example>
+            </parameter>
+            <parameter type="number" optional="true" name="filtergreen">
+                <description>Number from 0-255 representing the Green value for the filter. May be required for certain filters.</description>
+                <example>0</example>
+            </parameter>
+            <parameter type="number" optional="true" name="filterblue">
+                <description>Number from 0-255 representing the Blue value for the filter. May be required for certain filters.</description>
+                <example>0</example>
+            </parameter>
+            <parameter type="number" optional="true" name="saturation">
+                <description>Number from -100-100 representing the Saturation value for the filter. May be required for certain filters.</description>
+                <example>0</example>
+            </parameter>
+            <parameter type="string" optional="true" name="fade">
+                <description>Key representing if/how the video should fade. Possible values are: fadein, fadeout, fadeboth, none</description>
+                <example>none</example>
+            </parameter>
+            <parameter type="string" optional="true" name="overlaytext">
+                <description>String of text to overlay on top of the video</description>
+                <example>none</example>
+            </parameter>
+            <parameter type="string" optional="true" name="overlayfont">
+                <description>Font key representing the font to use for the overlaid text. Possible values returned from filteroptions API call</description>
+                <example>Liberation Sans</example>
+            </parameter>
+            <parameter type="string" optional="true" name="overlayfontcolor">
+                <description>Hex representation of the color to use for the overlaid text.</description>
+                <example>FFFFFF</example>
+            </parameter>
+            <parameter type="number" optional="true" name="overlayfontsize">
+                <description>Number representing the font size to use for the overlaid text.</description>
+                <example>40</example>
+            </parameter>
+            <parameter type="number" optional="true" name="overlayfontbordersize">
+                <description>Number representing the stroke size to use on the overlaid text.</description>
+                <example>0</example>
+            </parameter>
+            <parameter type="string" optional="true" name="overlayfontbordercolor">
+                <description>Hex representation of the color to use for the overlaid text stroke.</description>
+                <example>000000</example>
+            </parameter>
+            <parameter type="number" optional="true" name="overlayshadowsize">
+                <description>Number representing the size of the shadow for the overlaid text.</description>
+                <example>1</example>
+            </parameter>
+            <parameter type="string" optional="true" name="overlayshadowcolor">
+                <description>Hex representation of the color to use for the overlaid text shadow.</description>
+                <example>000000</example>
+            </parameter>
+            <parameter type="string" optional="true" name="overlayshadowcolor">
+                <description>Hex representation of the color to use for the overlaid text shadow.</description>
+                <example>000000</example>
+            </parameter>
+            <parameter type="number" optional="true" name="overlaytextstart">
+                <description>Number in seconds of when the overlaid text should appear.</description>
+                <example>0</example>
+            </parameter>
+            <parameter type="number" optional="true" name="overlaytextend">
+                <description>Number in seconds of when the overlaid text should disappear.</description>
+                <example>1</example>
+            </parameter>
+            <parameter type="number" optional="true" name="overlaytextposition">
+                <description>Number representing the position the overlaid text should be placed on the video. 8 = Top, 5 = Middle, 2 = bottom</description>
+                <example>2</example>
+            </parameter>
+        </parameters>
+        <response type="Video Filter Response"/>
+        <errors>
+            <error type="JSON" code="403">
+                <description>
+					{
+	&quot;code&quot;:1,
+	&quot;message&quot;:&quot;Invalid API Token&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="403">
+                <description>
+					{
+	&quot;code&quot;:4,
+	&quot;message&quot;:&quot;Specified video session is currently filtering&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:2,
+	&quot;message&quot;:&quot;Missing Required Parameters&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:3,
+	&quot;message&quot;:&quot;Specified video session was not found&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:4,
+	&quot;message&quot;:&quot;Specified video session is currently filtering&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:6,
+	&quot;message&quot;:&quot;Specified Filter is either inactive or not found&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:7,
+	&quot;message&quot;:&quot;Missing Specified Filter's Required Parameters&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:104,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:111,
+	&quot;message&quot;:&quot;Unable to fulfill request with exit code [exit_code]&quot;
+}				</description>
+            </error>
+        </errors>
+    </endpoint>
+    <endpoint name="Video Filter Cancel" group="Video" http="POST">
+        <route>/video/filtercancel/{session}</route>
+        <description>Cancels the specified video's filter job if one is running.</description>
+        <parameters>
+            <parameter type="string" optional="false" name="session">
+                <description>Unique key associated with media</description>
+                <example></example>
+            </parameter>
+        </parameters>
+        <response type="Video Filter Cancel Response"/>
+        <errors>
+            <error type="JSON" code="403">
+                <description>
+					{
+	&quot;code&quot;:1,
+	&quot;message&quot;:&quot;Invalid API Token&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:3,
+	&quot;message&quot;:&quot;Specified video session was not found&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:10,
+	&quot;message&quot;:&quot;Specified video session is not currently filtering&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:106,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:111,
+	&quot;message&quot;:&quot;Unable to fulfill request with exit code [exit_code]&quot;
+}				</description>
+            </error>
+        </errors>
+    </endpoint>
+    <endpoint name="Video Filter Preview" group="Video" http="POST">
+        <route>/video/filterpreview/{session}</route>
+        <description>Preview a filter on the specified video. Takes filter options and returns the location of the filtered preview image.</description>
+        <parameters>
+            <parameter type="string" optional="false" name="session">
+                <description>Unique key associated with media</description>
+                <example></example>
+            </parameter>
+            <parameter type="string" optional="false" name="filter">
+                <description>A filter_key that represents the filter to use</description>
+                <example></example>
+            </parameter>
+            <parameter type="number" optional="true" name="filterred">
+                <description>Number from 0-255 representing the Red value for the filter. May be required for certain filters.</description>
+                <example>0</example>
+            </parameter>
+            <parameter type="number" optional="true" name="filtergreen">
+                <description>Number from 0-255 representing the Green value for the filter. May be required for certain filters.</description>
+                <example>0</example>
+            </parameter>
+            <parameter type="number" optional="true" name="filterblue">
+                <description>Number from 0-255 representing the Blue value for the filter. May be required for certain filters.</description>
+                <example>0</example>
+            </parameter>
+            <parameter type="number" optional="true" name="saturation">
+                <description>Number from -100-100 representing the Saturation value for the filter. May be required for certain filters.</description>
+                <example>0</example>
+            </parameter>
+        </parameters>
+        <response type="Video Filter Preview Response"/>
+        <errors>
+            <error type="JSON" code="403">
+                <description>
+					{
+	&quot;code&quot;:1,
+	&quot;message&quot;:&quot;Invalid API Token&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="403">
+                <description>
+					{
+	&quot;code&quot;:4,
+	&quot;message&quot;:&quot;Specified video session is currently filtering&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:2,
+	&quot;message&quot;:&quot;Missing Required Parameters&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:3,
+	&quot;message&quot;:&quot;Specified video session was not found&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:4,
+	&quot;message&quot;:&quot;Specified video session is currently filtering&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:6,
+	&quot;message&quot;:&quot;Specified Filter is either inactive or not found&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:7,
+	&quot;message&quot;:&quot;Missing Specified Filter's Required Parameters&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:102,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+        </errors>
+    </endpoint>
+    <endpoint name="Video Filter Progress" group="Video" http="POST">
+        <route>/video/filterprogress/{session}</route>
+        <description>Checks the progress of the specified video session. Will return the current step, the total steps, the progress percent of the current step if one is supplied, and a message indicating where it is in the filter job.</description>
+        <parameters>
+            <parameter type="string" optional="false" name="session">
+                <description>Unique key associated with media</description>
+                <example></example>
+            </parameter>
+        </parameters>
+        <response type="Video Filter Progress Response"/>
+        <errors>
+            <error type="JSON" code="403">
+                <description>
+					{
+	&quot;code&quot;:1,
+	&quot;message&quot;:&quot;Invalid API Token&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:3,
+	&quot;message&quot;:&quot;Specified video session was not found&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:103,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+        </errors>
+    </endpoint>
+    <endpoint name="Video Images" group="Video" http="POST">
+        <route>/video/images/{session}</route>
+        <description>Returns a list of the specified video's images.</description>
+        <parameters>
+            <parameter type="string" optional="false" name="session">
+                <description>Unique key associated with media</description>
+                <example></example>
+            </parameter>
+            <parameter type="number" optional="true" name="count">
+                <description>Number representing how many images should be returned</description>
+                <example>20</example>
+            </parameter>
+            <parameter type="string" optional="true" name="type">
+                <description>String representing the type of image that should be returned. Possible values: filtered, original</description>
+                <example>filtered</example>
+            </parameter>
+        </parameters>
+        <response type="Video Images Response"/>
+        <errors>
+            <error type="JSON" code="403">
+                <description>
+					{
+	&quot;code&quot;:1,
+	&quot;message&quot;:&quot;Invalid API Token&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:3,
+	&quot;message&quot;:&quot;Specified video session was not found&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:9,
+	&quot;message&quot;:&quot;Specified video session has not been filtered yet&quot;
+}				</description>
+            </error>
+        </errors>
+    </endpoint>
+    <endpoint name="Video Information" group="Video" http="POST">
+        <route>/video/{session}</route>
+        <description>Returns information about a completed filter session. Preview images, filtered and original video URL, and some properties of the filtered video.</description>
+        <parameters>
+            <parameter type="string" optional="false" name="session">
+                <description>Unique key associated with media</description>
+                <example></example>
+            </parameter>
+        </parameters>
+        <response type="Video Information Response"/>
+        <errors>
+            <error type="JSON" code="403">
+                <description>
+					{
+	&quot;code&quot;:1,
+	&quot;message&quot;:&quot;Invalid API Token&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:3,
+	&quot;message&quot;:&quot;Specified video session was not found&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:8,
+	&quot;message&quot;:&quot;Filtered video not found&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:106,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:108,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:111,
+	&quot;message&quot;:&quot;Unable to fulfill request with exit code [exit_code]&quot;
+}				</description>
+            </error>
+        </errors>
+    </endpoint>
+    <endpoint name="Video Initiate" group="Video" http="POST">
+        <route>/video/initiate</route>
+        <description>Initiates a filter session and responds with the session's unique identifier. The identifier is used throughout the API to determine which video to complete the requested action on.</description>
+        <parameters>
+            <parameter type="binary" optional="false" name="file">
+                <description>Binary file data posted in the body of the request</description>
+                <example></example>
+            </parameter>
+            <parameter type="string" optional="false" name="name">
+                <description>Required only if the file name isn't sent as part of the File object</description>
+                <example></example>
+            </parameter>
+        </parameters>
+        <response type="Video Initiate Response"/>
+        <errors>
+            <error type="JSON" code="403">
+                <description>
+					{
+	&quot;code&quot;:1,
+	&quot;message&quot;:&quot;Invalid API Token&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:2,
+	&quot;message&quot;:&quot;Missing Required Parameters&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:5,
+	&quot;message&quot;:&quot;Video must be less than 60 seconds.&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:100,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:101,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:102,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:104,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:105,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:111,
+	&quot;message&quot;:&quot;Unable to fulfill request with exit code [exit_code]&quot;
+}				</description>
+            </error>
+        </errors>
+    </endpoint>
+    <endpoint name="Video Rotate" group="Video" http="POST">
+        <route>/video/rotate/{session}</route>
+        <description>Rotates the specified video. Depending how the video is shot, the perspective may not be what the user was expecting after upload. In most cases, rotating the video Clockwise will remedy that. </description>
+        <parameters>
+            <parameter type="string" optional="false" name="session">
+                <description>Unique key associated with media</description>
+                <example></example>
+            </parameter>
+            <parameter type="number" optional="false" name="rotation">
+                <description>A number of 1-4. 1 = Clockwise, 2 = Counter Clockwise, 3 = Clockwise and Flip, 4 = Counter Clockwise and Flip</description>
+                <example></example>
+            </parameter>
+        </parameters>
+        <response type="Video Rotate Response"/>
+        <errors>
+            <error type="JSON" code="403">
+                <description>
+					{
+	&quot;code&quot;:1,
+	&quot;message&quot;:&quot;Invalid API Token&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:2,
+	&quot;message&quot;:&quot;Missing Required Parameters&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:3,
+	&quot;message&quot;:&quot;Specified video session was not found&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:4,
+	&quot;message&quot;:&quot;Specified video session is currently filtering&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:103,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:102,
+	&quot;message&quot;:&quot;Unable to fulfill request&quot;
+}				</description>
+            </error>
+            <error type="JSON" code="400">
+                <description>
+					{
+	&quot;code&quot;:111,
+	&quot;message&quot;:&quot;Unable to fulfill request with exit code [exit_code]&quot;
+}				</description>
+            </error>
+        </errors>
+    </endpoint>
+    <model name="Filter Options Response">
+        <description></description>
+        <example>{
+   &quot;success&quot;:true,
+   &quot;filters&quot;:[
+      {
+         &quot;name&quot;:&quot;Gotham&quot;,
+         &quot;filter_key&quot;:&quot;gotham&quot;,
+         &quot;required&quot;:false
+      },
+      {
+         &quot;name&quot;:&quot;Grayscale&quot;,
+         &quot;filter_key&quot;:&quot;grayscale&quot;,
+         &quot;required&quot;:false
+      },
+      {
+         &quot;name&quot;:&quot;Kelvin&quot;,
+         &quot;filter_key&quot;:&quot;kelvin&quot;,
+         &quot;required&quot;:false
+      },
+      {
+         &quot;name&quot;:&quot;Lomo&quot;,
+         &quot;filter_key&quot;:&quot;lomo&quot;,
+         &quot;required&quot;:false
+      },
+      {
+         &quot;name&quot;:&quot;Memory&quot;,
+         &quot;filter_key&quot;:&quot;memory&quot;,
+         &quot;required&quot;:false
+      },
+      {
+         &quot;name&quot;:&quot;Nashville&quot;,
+         &quot;filter_key&quot;:&quot;nashville&quot;,
+         &quot;required&quot;:false
+      },
+      {
+         &quot;name&quot;:&quot;Old Film&quot;,
+         &quot;filter_key&quot;:&quot;oldfilm&quot;,
+         &quot;required&quot;:false
+      },
+      {
+         &quot;name&quot;:&quot;Painted&quot;,
+         &quot;filter_key&quot;:&quot;painted&quot;,
+         &quot;required&quot;:false
+      },
+      {
+         &quot;name&quot;:&quot;Saturation&quot;,
+         &quot;filter_key&quot;:&quot;saturation&quot;,
+         &quot;required&quot;:[
+            &quot;saturation&quot;
+         ]
+      },
+      {
+         &quot;name&quot;:&quot;Sepia&quot;,
+         &quot;filter_key&quot;:&quot;sepia&quot;,
+         &quot;required&quot;:false
+      },
+      {
+         &quot;name&quot;:&quot;Sketched&quot;,
+         &quot;filter_key&quot;:&quot;sketched&quot;,
+         &quot;required&quot;:false
+      },
+      {
+         &quot;name&quot;:&quot;Tiltshift&quot;,
+         &quot;filter_key&quot;:&quot;tiltshift&quot;,
+         &quot;required&quot;:false
+      },
+      {
+         &quot;name&quot;:&quot;Tint&quot;,
+         &quot;filter_key&quot;:&quot;tint&quot;,
+         &quot;required&quot;:[
+            &quot;filterred&quot;,
+            &quot;filtergreen&quot;,
+            &quot;filterblue&quot;
+         ]
+      },
+      {
+         &quot;name&quot;:&quot;Toaster&quot;,
+         &quot;filter_key&quot;:&quot;toaster&quot;,
+         &quot;required&quot;:false
+      },
+      {
+         &quot;name&quot;:&quot;Vignette&quot;,
+         &quot;filter_key&quot;:&quot;vignette&quot;,
+         &quot;required&quot;:false
+      },
+      {
+         &quot;name&quot;:&quot;Vivid&quot;,
+         &quot;filter_key&quot;:&quot;vivid&quot;,
+         &quot;required&quot;:false
+      }
+   ],
+   &quot;fonts&quot;:[
+      {
+         &quot;name&quot;:&quot;DejaVu Sans&quot;,
+         &quot;font_key&quot;:&quot;DejaVu Sans&quot;
+      },
+      {
+         &quot;name&quot;:&quot;DejaVu Serif&quot;,
+         &quot;font_key&quot;:&quot;DejaVu Serif&quot;
+      },
+      {
+         &quot;name&quot;:&quot;Khmer OS&quot;,
+         &quot;font_key&quot;:&quot;Khmer OS&quot;
+      },
+      {
+         &quot;name&quot;:&quot;Liberation Sans&quot;,
+         &quot;font_key&quot;:&quot;Liberation Sans&quot;
+      },
+      {
+         &quot;name&quot;:&quot;VL Gothic&quot;,
+         &quot;font_key&quot;:&quot;VL Gothic&quot;
+      }
+   ]
+}</example>
+        <fields>
+            <simple type="list[string]" optional="false" name="filters"/>
+            <simple type="list[string]" optional="false" name="fonts"/>
+            <simple type="boolean" optional="false" name="success">
+                <description></description>
+                <example>true</example>
+            </simple>
+        </fields>
+    </model>
+    <model name="Photo Delete Response">
+        <description></description>
+        <example>{
+   &quot;success&quot;:true,
+   &quot;unique&quot;:&quot;[session]&quot;
+}</example>
+        <fields>
+            <simple type="boolean" optional="false" name="success">
+                <description></description>
+                <example>true</example>
+            </simple>
+            <simple type="string" optional="false" name="unique">
+                <description></description>
+                <example>[session]</example>
+            </simple>
+        </fields>
+    </model>
+    <model name="Photo Filter Response">
+        <description></description>
+        <example>{
+   &quot;success&quot;:true,
+   &quot;unique&quot;:&quot;[session]&quot;,
+   &quot;photo_url_filtered_direct&quot;:&quot;[link_to_filtered_image_unmasked]&quot;,
+   &quot;photo_url_original_direct&quot;:&quot;[link_to_original_image_unmasked]&quot;,
+   &quot;photo_url_filtered_masked&quot;:&quot;[link_to_filtered_image]&quot;,
+   &quot;photo_url_original_masked&quot;:&quot;[link_to_original_image]&quot;,
+   &quot;expire_days_remaining&quot;:10,
+   &quot;expire_ISO_8601_date&quot;:&quot;2012-09-20T07:00:00Z&quot;
+}</example>
+        <fields>
+            <simple type="string" optional="false" name="expire_ISO_8601_date">
+                <description></description>
+                <example>2012-09-20T07:00:00Z</example>
+            </simple>
+            <simple type="number" optional="false" name="expire_days_remaining">
+                <description></description>
+                <example>10</example>
+            </simple>
+            <simple type="string" optional="false" name="photo_url_filtered_direct">
+                <description></description>
+                <example>[link_to_filtered_image_unmasked]</example>
+            </simple>
+            <simple type="string" optional="false" name="photo_url_filtered_masked">
+                <description></description>
+                <example>[link_to_filtered_image]</example>
+            </simple>
+            <simple type="string" optional="false" name="photo_url_original_direct">
+                <description></description>
+                <example>[link_to_original_image_unmasked]</example>
+            </simple>
+            <simple type="string" optional="false" name="photo_url_original_masked">
+                <description></description>
+                <example>[link_to_original_image]</example>
+            </simple>
+            <simple type="boolean" optional="false" name="success">
+                <description></description>
+                <example>true</example>
+            </simple>
+            <simple type="string" optional="false" name="unique">
+                <description></description>
+                <example>[session]</example>
+            </simple>
+        </fields>
+    </model>
+    <model name="Photo Information Response">
+        <description></description>
+        <example>{
+   &quot;success&quot;:true,
+   &quot;unique&quot;:&quot;[session]&quot;,
+   &quot;photo_url_filtered_direct&quot;:&quot;[link_to_filtered_image_unmasked]&quot;,
+   &quot;photo_url_original_direct&quot;:&quot;[link_to_original_image_unmasked]&quot;,
+   &quot;photo_url_filtered_masked&quot;:&quot;[link_to_filtered_image]&quot;,
+   &quot;photo_url_original_masked&quot;:&quot;[link_to_original_image]&quot;,
+   &quot;expire_days_remaining&quot;:10,
+   &quot;expire_ISO_8601_date&quot;:&quot;2012-09-20T07:00:00Z&quot;,
+   &quot;photo_width&quot;:300,
+   &quot;photo_height&quot;:260
+}</example>
+        <fields>
+            <simple type="string" optional="false" name="expire_ISO_8601_date">
+                <description></description>
+                <example>2012-09-20T07:00:00Z</example>
+            </simple>
+            <simple type="number" optional="false" name="expire_days_remaining">
+                <description></description>
+                <example>10</example>
+            </simple>
+            <simple type="number" optional="false" name="photo_height">
+                <description></description>
+                <example>260</example>
+            </simple>
+            <simple type="string" optional="false" name="photo_url_filtered_direct">
+                <description></description>
+                <example>[link_to_filtered_image_unmasked]</example>
+            </simple>
+            <simple type="string" optional="false" name="photo_url_filtered_masked">
+                <description></description>
+                <example>[link_to_filtered_image]</example>
+            </simple>
+            <simple type="string" optional="false" name="photo_url_original_direct">
+                <description></description>
+                <example>[link_to_original_image_unmasked]</example>
+            </simple>
+            <simple type="string" optional="false" name="photo_url_original_masked">
+                <description></description>
+                <example>[link_to_original_image]</example>
+            </simple>
+            <simple type="number" optional="false" name="photo_width">
+                <description></description>
+                <example>300</example>
+            </simple>
+            <simple type="boolean" optional="false" name="success">
+                <description></description>
+                <example>true</example>
+            </simple>
+            <simple type="string" optional="false" name="unique">
+                <description></description>
+                <example>[session]</example>
+            </simple>
+        </fields>
+    </model>
+    <model name="Photo Initiate Response">
+        <description></description>
+        <example>{
+   &quot;success&quot;:true,
+   &quot;unique&quot;:&quot;[session]&quot;,
+   &quot;original_image&quot;:&quot;[link_to_original_image]&quot;,
+   &quot;preview_image&quot;:&quot;[link_to_filtered_image]&quot;,
+   &quot;photo_width&quot;:260,
+   &quot;photo_height&quot;:300,
+   &quot;expire_days_remaining&quot;:10,
+   &quot;expire_ISO_8601_date&quot;:&quot;2012-09-20T07:00:00Z&quot;
+}</example>
+        <fields>
+            <simple type="string" optional="false" name="expire_ISO_8601_date">
+                <description></description>
+                <example>2012-09-20T07:00:00Z</example>
+            </simple>
+            <simple type="number" optional="false" name="expire_days_remaining">
+                <description></description>
+                <example>10</example>
+            </simple>
+            <simple type="string" optional="false" name="original_image">
+                <description></description>
+                <example>[link_to_original_image]</example>
+            </simple>
+            <simple type="number" optional="false" name="photo_height">
+                <description></description>
+                <example>300</example>
+            </simple>
+            <simple type="number" optional="false" name="photo_width">
+                <description></description>
+                <example>260</example>
+            </simple>
+            <simple type="string" optional="false" name="preview_image">
+                <description></description>
+                <example>[link_to_filtered_image]</example>
+            </simple>
+            <simple type="boolean" optional="false" name="success">
+                <description></description>
+                <example>true</example>
+            </simple>
+            <simple type="string" optional="false" name="unique">
+                <description></description>
+                <example>[session]</example>
+            </simple>
+        </fields>
+    </model>
+    <model name="Photo Rotate Response">
+        <description></description>
+        <example>{
+   &quot;success&quot;:true,
+   &quot;unique&quot;:&quot;[session]&quot;,
+   &quot;original_image&quot;:&quot;[link_to_original_image]&quot;,
+   &quot;preview_image&quot;:&quot;[link_to_filtered_image]&quot;,
+   &quot;photo_width&quot;:260,
+   &quot;photo_height&quot;:300
+}</example>
+        <fields>
+            <simple type="string" optional="false" name="original_image">
+                <description></description>
+                <example>[link_to_original_image]</example>
+            </simple>
+            <simple type="number" optional="false" name="photo_height">
+                <description></description>
+                <example>300</example>
+            </simple>
+            <simple type="number" optional="false" name="photo_width">
+                <description></description>
+                <example>260</example>
+            </simple>
+            <simple type="string" optional="false" name="preview_image">
+                <description></description>
+                <example>[link_to_filtered_image]</example>
+            </simple>
+            <simple type="boolean" optional="false" name="success">
+                <description></description>
+                <example>true</example>
+            </simple>
+            <simple type="string" optional="false" name="unique">
+                <description></description>
+                <example>[session]</example>
+            </simple>
+        </fields>
+    </model>
+    <model name="Video Delete Response">
+        <description></description>
+        <example>{
+   &quot;success&quot;:true,
+   &quot;unique&quot;:&quot;SESSION_KEY&quot;
+}</example>
+        <fields>
+            <simple type="boolean" optional="false" name="success">
+                <description></description>
+                <example>true</example>
+            </simple>
+            <simple type="string" optional="false" name="unique">
+                <description></description>
+                <example>SESSION_KEY</example>
+            </simple>
+        </fields>
+    </model>
+    <model name="Video Filter Cancel Response">
+        <description></description>
+        <example>{
+   &quot;success&quot;:true,
+   &quot;unique&quot;:&quot;SESSION_KEY&quot;
+}</example>
+        <fields>
+            <simple type="boolean" optional="false" name="success">
+                <description></description>
+                <example>true</example>
+            </simple>
+            <simple type="string" optional="false" name="unique">
+                <description></description>
+                <example>SESSION_KEY</example>
+            </simple>
+        </fields>
+    </model>
+    <model name="Video Filter Preview Response">
+        <description></description>
+        <example>{
+   &quot;success&quot;:true,
+   &quot;unique&quot;:&quot;SESSION_KEY&quot;,
+   &quot;preview_image&quot;:&quot;http://www.domain.com/video/preview-image/SESSION_KEY&quot;
+}</example>
+        <fields>
+            <simple type="string" optional="false" name="preview_image">
+                <description></description>
+                <example>http://www.domain.com/video/preview-image/SESSION_KEY</example>
+            </simple>
+            <simple type="boolean" optional="false" name="success">
+                <description></description>
+                <example>true</example>
+            </simple>
+            <simple type="string" optional="false" name="unique">
+                <description></description>
+                <example>SESSION_KEY</example>
+            </simple>
+        </fields>
+    </model>
+    <model name="Video Filter Progress Response">
+        <description></description>
+        <example>{
+   &quot;success&quot;:true,
+   &quot;unique&quot;:&quot;SESSION_KEY&quot;,
+   &quot;step&quot;:6,
+   &quot;steps&quot;:9,
+   &quot;message&quot;:{
+      &quot;text&quot;:&quot;filter progress&quot;,
+      &quot;progress_percent&quot;:7
+   }
+}</example>
+        <fields>
+            <simple type="string" optional="false" name="message">
+                <description></description>
+                <example>{&quot;text&quot;:&quot;filter progress&quot;,&quot;progress_percent&quot;:7}</example>
+            </simple>
+            <simple type="number" optional="false" name="step">
+                <description></description>
+                <example>6</example>
+            </simple>
+            <simple type="number" optional="false" name="steps">
+                <description></description>
+                <example>9</example>
+            </simple>
+            <simple type="boolean" optional="false" name="success">
+                <description></description>
+                <example>true</example>
+            </simple>
+            <simple type="string" optional="false" name="unique">
+                <description></description>
+                <example>SESSION_KEY</example>
+            </simple>
+        </fields>
+    </model>
+    <model name="Video Filter Response">
+        <description></description>
+        <example>{
+   &quot;success&quot;:true,
+   &quot;unique&quot;:&quot;SESSION_KEY&quot;
+}</example>
+        <fields>
+            <simple type="boolean" optional="false" name="success">
+                <description></description>
+                <example>true</example>
+            </simple>
+            <simple type="string" optional="false" name="unique">
+                <description></description>
+                <example>SESSION_KEY</example>
+            </simple>
+        </fields>
+    </model>
+    <model name="Video Images Response">
+        <description></description>
+        <example>{
+   &quot;success&quot;:true,
+   &quot;unique&quot;:&quot;[unique_to_session]&quot;,
+   &quot;images&quot;:[
+      &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000001-filtered.png&quot;,
+      &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000002-filtered.png&quot;,
+      &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000003-filtered.png&quot;,
+      &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000004-filtered.png&quot;,
+	  &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000005-filtered.png&quot;,
+      &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000006-filtered.png&quot;,
+      &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000007-filtered.png&quot;,
+      &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000008-filtered.png&quot;,
+	  &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000009-filtered.png&quot;,
+      &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000010-filtered.png&quot;,
+      &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000011-filtered.png&quot;,
+      &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000012-filtered.png&quot;,
+	  &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000013-filtered.png&quot;,
+      &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000014-filtered.png&quot;,
+      &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000015-filtered.png&quot;,
+      &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000016-filtered.png&quot;,
+	  &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000017-filtered.png&quot;,
+      &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000018-filtered.png&quot;,
+      &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000019-filtered.png&quot;,
+      &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000020-filtered.png&quot;
+   ]
+}</example>
+        <fields>
+            <simple type="list[string]" optional="false" name="images"/>
+            <simple type="boolean" optional="false" name="success">
+                <description></description>
+                <example>true</example>
+            </simple>
+            <simple type="string" optional="false" name="unique">
+                <description></description>
+                <example>[unique_to_session]</example>
+            </simple>
+        </fields>
+    </model>
+    <model name="Video Information Response">
+        <description></description>
+        <example>{
+   &quot;success&quot;:true,
+   &quot;unique&quot;:&quot;[unique_to_session]&quot;,
+   &quot;storage_usage&quot;:&quot;49.56mb&quot;,
+   &quot;preview_images&quot;:[
+      &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000001-filtered.png&quot;,
+      &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000002-filtered.png&quot;,
+      &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000003-filtered.png&quot;,
+      &quot;http://www.domain.com/video/processed-image/[unique_to_api_user_and_session]/000004-filtered.png&quot;,
+      ...
+   ],
+   &quot;video_url_filtered_direct&quot;:&quot;http://www.domain.com/sessions/[unique_to_api_user]/[unique_to_session]/encoded/video/filtered.mp4&quot;,
+   &quot;video_url_original_direct&quot;:&quot;http://www.domain.com/sessions/[unique_to_api_user]/[unique_to_session]/uploaded/original.[extension]&quot;,
+   &quot;video_url_filtered_masked&quot;:&quot;http://www.domain.com/video/filtered/[unique_to_api_user_and_session]&quot;,
+   &quot;video_url_original_masked&quot;:&quot;http://www.domain.com/video/original/[unique_to_api_user_and_session]/[extension]&quot;,
+   &quot;video_bitrate&quot;:&quot;203kb/s&quot;,
+   &quot;video_width&quot;:360,
+   &quot;video_height&quot;:480,
+   &quot;video_framerate&quot;:29.97,
+   &quot;video_length&quot;:6,
+   &quot;video_codec&quot;:&quot;h264 (High) (avc1 / 0x31637661)&quot;,
+   &quot;filter_options&quot;:{
+      &quot;filter&quot;:&quot;gotham&quot;,
+      &quot;filterred&quot;:0,
+      &quot;filterblue&quot;:0,
+      &quot;filtergreen&quot;:0,
+      &quot;saturation&quot;:0,
+      &quot;overlaytext&quot;:&quot;none&quot;,
+      &quot;overlayfont&quot;:&quot;&quot;,
+      &quot;overlayfontcolor&quot;:&quot;FFFFFF&quot;,
+      &quot;overlayfontsize&quot;:&quot;40&quot;,
+      &quot;overlayfontbordersize&quot;:&quot;0&quot;,
+      &quot;overlayfontbordercolor&quot;:&quot;000000&quot;,
+      &quot;overlayshadowsize&quot;:&quot;1&quot;,
+      &quot;overlayshadowcolor&quot;:&quot;000000&quot;,
+      &quot;overlaytextstart&quot;:0,
+      &quot;overlaytextend&quot;:0,
+      &quot;overlaytextposition&quot;:&quot;&quot;,
+      &quot;fade&quot;:&quot;fadeout&quot;
+   }
+}</example>
+        <fields/>
+    </model>
+    <model name="Video Initiate Response">
+        <description></description>
+        <example>{
+   &quot;success&quot;:true,
+   &quot;unique&quot;:&quot;[session]&quot;,
+   &quot;original_image&quot;:&quot;[link_to_original_image]&quot;,
+   &quot;preview_image&quot;:&quot;[link_to_filtered_image]&quot;,
+   &quot;video_width&quot;:480,
+   &quot;video_height&quot;:360,
+   &quot;video_framerate&quot;:29.97,
+   &quot;video_length&quot;:30,
+   &quot;expire_days_remaining&quot;:10,
+   &quot;expire_ISO_8601_date&quot;:&quot;2012-09-20T07:00:00Z&quot;
+}</example>
+        <fields>
+            <simple type="string" optional="false" name="expire_ISO_8601_date">
+                <description></description>
+                <example>2012-09-20T07:00:00Z</example>
+            </simple>
+            <simple type="number" optional="false" name="expire_days_remaining">
+                <description></description>
+                <example>10</example>
+            </simple>
+            <simple type="string" optional="false" name="original_image">
+                <description></description>
+                <example>[link_to_original_image]</example>
+            </simple>
+            <simple type="string" optional="false" name="preview_image">
+                <description></description>
+                <example>[link_to_filtered_image]</example>
+            </simple>
+            <simple type="boolean" optional="false" name="success">
+                <description></description>
+                <example>true</example>
+            </simple>
+            <simple type="string" optional="false" name="unique">
+                <description></description>
+                <example>[session]</example>
+            </simple>
+            <simple type="number" optional="false" name="video_framerate">
+                <description></description>
+                <example>29.97</example>
+            </simple>
+            <simple type="number" optional="false" name="video_height">
+                <description></description>
+                <example>360</example>
+            </simple>
+            <simple type="number" optional="false" name="video_length">
+                <description></description>
+                <example>30</example>
+            </simple>
+            <simple type="number" optional="false" name="video_width">
+                <description></description>
+                <example>480</example>
+            </simple>
+        </fields>
+    </model>
+    <model name="Video Rotate Response">
+        <description></description>
+        <example>{
+   &quot;success&quot;:true,
+   &quot;unique&quot;:&quot;SESSION_KEY&quot;,
+   &quot;video_width&quot;:360,
+   &quot;video_height&quot;:480,
+   &quot;video_framerate&quot;:29.97,
+   &quot;preview_image&quot;:&quot;http://www.domain.com/video/preview-image/SESSION_KEY&quot;
+}</example>
+        <fields>
+            <simple type="string" optional="false" name="preview_image">
+                <description></description>
+                <example>http://www.domain.com/video/preview-image/SESSION_KEY</example>
+            </simple>
+            <simple type="boolean" optional="false" name="success">
+                <description></description>
+                <example>true</example>
+            </simple>
+            <simple type="string" optional="false" name="unique">
+                <description></description>
+                <example>SESSION_KEY</example>
+            </simple>
+            <simple type="number" optional="false" name="video_framerate">
+                <description></description>
+                <example>29.97</example>
+            </simple>
+            <simple type="number" optional="false" name="video_height">
+                <description></description>
+                <example>480</example>
+            </simple>
+            <simple type="number" optional="false" name="video_width">
+                <description></description>
+                <example>360</example>
+            </simple>
+        </fields>
+    </model>
+</api>
